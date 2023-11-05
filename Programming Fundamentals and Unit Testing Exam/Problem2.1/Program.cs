@@ -19,4 +19,3 @@ for (int i = 0; i < countOfRotations; i++)
 
 string result = string.Join(", ", arrayOfNumbers);
 Console.WriteLine(result);
-//
