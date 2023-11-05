@@ -26,7 +26,7 @@ public class BalancedBracketsTests
     }
 
     [Test]
-    public void Test_IsBalanced_UnbalancedBrackets_ShouldReturnFalse()
+    public void Test_IsBalanced_UnbalancedBrackets_ShouldReturnFalse1()
     {
         string[] input = new string[] { ")", "(", ")" };
 
