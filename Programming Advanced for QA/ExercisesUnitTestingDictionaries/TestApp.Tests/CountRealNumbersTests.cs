@@ -25,7 +25,7 @@ public class CountRealNumbersTests
     public void Test_Count_WithSingleNumber_ShouldReturnCountString()
     {
         // Arrange
-        int[] input = { 2 };
+        int[] input = new int[] { 2 };
 
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("2 -> 1");
@@ -43,7 +43,7 @@ public class CountRealNumbersTests
     public void Test_Count_WithMultipleNumbers_ShouldReturnCountString()
     {
         // Arrange
-        int[] input = { 55, 2, 4, 43, 55, 4 };
+        int[] input = new int[] { 55, 2, 4, 43, 55, 4 };
         
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("2 -> 1");
@@ -63,14 +63,12 @@ public class CountRealNumbersTests
     public void Test_Count_WithNegativeNumbers_ShouldReturnCountString()
     {
         // Arrange
-        int[] input = { 55, 2, 4, - 43, 55, - 4 };
+        int[] input = new int[] { -43, -4 };
 
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("-43 -> 1");
         sb.AppendLine("-4 -> 1");
-        sb.AppendLine("2 -> 1");
-        sb.AppendLine("4 -> 1");
-        sb.AppendLine("55 -> 2");
+        
         string expected = sb.ToString().Trim();
 
         // Act
@@ -84,15 +82,14 @@ public class CountRealNumbersTests
     public void Test_Count_WithZero_ShouldReturnCountString()
     {
         // Arrange
-        int[] input = { 55, 2, 4, -43, 55, -4, 0 };
+        int[] input = new int[] { 0, 0, 1 };
 
         StringBuilder sb = new StringBuilder();
-        sb.AppendLine("-43 -> 1");
-        sb.AppendLine("-4 -> 1");
-        sb.AppendLine("0 -> 1");
-        sb.AppendLine("2 -> 1");
-        sb.AppendLine("4 -> 1");
-        sb.AppendLine("55 -> 2");
+        
+        sb.AppendLine("0 -> 2");
+        sb.AppendLine("1 -> 1");
+
+       
         string expected = sb.ToString().Trim();
 
         // Act
