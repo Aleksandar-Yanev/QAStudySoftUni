@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,11 @@ namespace CarManufacturer
             vwMk3.Make = "VW";
             vwMk3.Model = "MK3";
             vwMk3.Year = 1992;
-            Console.WriteLine($"Make: {vwMk3.Make}\nModel: {vwMk3.Model}\nYear: {vwMk3.Year}");
+            vwMk3.FuelQuantity = 200;
+            vwMk3.FuelConsumption = 200;
+            vwMk3.Drive(2000);
+           
+            Console.WriteLine(vwMk3.WhoAmI());
         }
     }
 }
