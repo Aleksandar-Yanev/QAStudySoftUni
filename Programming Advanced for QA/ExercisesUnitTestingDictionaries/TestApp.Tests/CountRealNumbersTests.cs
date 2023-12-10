@@ -12,7 +12,7 @@ public class CountRealNumbersTests
     public void Test_Count_WithEmptyArray_ShouldReturnEmptyString()
     {
         // Arrange
-        int[] input = { };
+        int[] input = new int[0];
 
         // Act
         string result = CountRealNumbers.Count(input);
@@ -84,12 +84,15 @@ public class CountRealNumbersTests
     public void Test_Count_WithZero_ShouldReturnCountString()
     {
         // Arrange
-        int[] input = { 0 };
+        int[] input = { 55, 2, 4, -43, 55, -4, 0 };
 
         StringBuilder sb = new StringBuilder();
-       
+        sb.AppendLine("-43 -> 1");
+        sb.AppendLine("-4 -> 1");
         sb.AppendLine("0 -> 1");
-        
+        sb.AppendLine("2 -> 1");
+        sb.AppendLine("4 -> 1");
+        sb.AppendLine("55 -> 2");
         string expected = sb.ToString().Trim();
 
         // Act
