@@ -11,16 +11,27 @@ namespace CarManufacturer
     {
         static void Main() 
         {
-            Car vwMk3 = new Car();
+            string make = Console.ReadLine();
+            string model = Console.ReadLine();
+            int year = int.Parse(Console.ReadLine());
+            double fuelQuantity = double.Parse(Console.ReadLine());
+            double FuelConsumption = double.Parse(Console.ReadLine());
             
-            vwMk3.Make = "VW";
-            vwMk3.Model = "MK3";
-            vwMk3.Year = 1992;
-            vwMk3.FuelQuantity = 200;
-            vwMk3.FuelConsumption = 200;
-            vwMk3.Drive(2000);
+            Car firstCar = new Car();
+            Car secondCar = new Car(make, model, year);
+            Car thirdCar = new Car(make, model, year, fuelQuantity, FuelConsumption);
+
+
+            //Car vwMk3 = new Car();
+            
+            //vwMk3.Make = "VW";
+            //vwMk3.Model = "MK3";
+            //vwMk3.Year = 1992;
+            //vwMk3.FuelQuantity = 200;
+            //vwMk3.FuelConsumption = 200;
+            //vwMk3.Drive(2000);
            
-            Console.WriteLine(vwMk3.WhoAmI());
+            //Console.WriteLine(vwMk3.WhoAmI());
         }
     }
 }
