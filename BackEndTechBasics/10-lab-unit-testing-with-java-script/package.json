@@ -1,0 +1,16 @@
+{
+  "name": "10-unit-testing-with-java-script",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./*.spec.js"
+  },
+  "author": "Aleksandar Yanev",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^5.0.3",
+    "mocha": "^10.2.0"
+  }
+}
