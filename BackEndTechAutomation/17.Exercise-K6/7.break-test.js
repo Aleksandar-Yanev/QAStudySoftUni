@@ -12,6 +12,6 @@ export const options = {
 
 export default function () {
     
-    http.get('https://test.k6.io/news')
+    http.get('https://test.k6.io/news.php')
     sleep(2)
 }
