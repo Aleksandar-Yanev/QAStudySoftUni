@@ -2,6 +2,11 @@ import http from 'k6/http'
 import { sleep } from 'k6'
 
 export const options = {
+    ext: {
+        loadimpact: {
+            progectID: '3690136'
+        }
+    },
     vus: 1,
     duration: '30s'
 }
