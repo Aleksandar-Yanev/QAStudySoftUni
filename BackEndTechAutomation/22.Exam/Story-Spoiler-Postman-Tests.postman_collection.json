@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "037bdb19-5880-40f9-8e4c-f3fa82b536a6",
+		"name": "Story-Spoiler-Postman-Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28660297"
+	},
+	"item": [
+		{
+			"name": "Login and Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response body should include the attribut username\", function () {\r",
+							"pm.expect(responseData).to.have.property(\"username\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body should include the attribut password\", function () {\r",
+							"pm.expect(responseData).to.have.property(\"password\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body should include the attribut accessToken\", function () {\r",
+							"pm.expect(responseData).to.have.property(\"accessToken\");\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"accessToken\", responseData.accessToken);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"userName\": \"alex357\", \r\n\"password\": \"qaz123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/User/Authentication",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"User",
+						"Authentication"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a New Story",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const randomStory = 'Story' + Math.floor(Math.random()*1000);\r",
+							"pm.collectionVariables.set(\"randomStory\", randomStory);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response should have storyId attribut\", function () {\r",
+							"    pm.expect(responseData).to.have.property(\"storyId\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body sould have 'Successfully created!' message \", function () {\r",
+							"    pm.expect(responseData.msg).to.be.eql(\"Successfully created!\");\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"storyId\", responseData.storyId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\": \"{{randomStory}}\", \r\n\"description\": \"Description for {{randomStory}}\", \r\n\"url\": \"https://st2.depositphotos.com/1105977/5461/i/380/depositphotos_54615585-stock-photo-old-books-on-wooden-table.jpg\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/Story/Create",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"Story",
+						"Create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search for the Created Story by Title",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response to be an array\", function () {\r",
+							"     pm.expect(responseData).to.be.an(\"array\").that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should contain the story with the matching title\", function () {\r",
+							"    const searchedStory = responseData[0];\r",
+							"    const randomStory = pm.collectionVariables.get(\"randomStory\")\r",
+							"    pm.expect(searchedStory.title).to.be.equal(randomStory);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/Story/Search?keyword={{randomStory}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"Story",
+						"Search"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "{{randomStory}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit the Created Story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Message should be 'Successfully edited'\", function () {\r",
+							"    pm.expect(responseData.msg).to.eql(\"Successfully edited\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\": \"Edited title for {{randomStory}}\", \r\n\"description\": \"Description for {{randomStory}}\", \r\n\"url\": \"https://st2.depositphotos.com/1105977/5461/i/380/depositphotos_54615585-stock-photo-old-books-on-wooden-table.jpg\"\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/Story/Edit/{{storyId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"Story",
+						"Edit",
+						"{{storyId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the Edited Story",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Message should be 'Deleted successfully!'\", function () {\r",
+							"    pm.expect(responseData.msg).to.eql(\"Deleted successfully!\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/Story/Delete/{{storyId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"Story",
+						"Delete",
+						"{{storyId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://d5wfqm7y6yb3q.cloudfront.net",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		},
+		{
+			"key": "randomStory",
+			"value": ""
+		},
+		{
+			"key": "storyId",
+			"value": ""
+		}
+	]
+}
